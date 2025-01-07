@@ -14,7 +14,6 @@ h2 {
   font-size: 30px;
 }
 
-/*nigga*/
 .established {
   font-style: italic;
 }
@@ -50,6 +49,10 @@ hr {
 
 .bottom-line {
   margin-top: 25px;
+}
+
+.Currency{
+  font-size:10px;
 }
 
 h1,
