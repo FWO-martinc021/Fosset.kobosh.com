@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ion Quiz</title>
+</head>
+<body>
+    <h2>Ion Quiz</h2>
+
+    <p id="question"></p>
+    <input type="text" id="answer" placeholder="Enter charge">
+    <button id="submitBtn">Submit</button>
+
+    <p id="feedback"></p>
+
+    <script>
+        const ions = {
+  "H3O": "+",
+  "CO3": "2-",
+  "ClO3": "-",
+  "ClO2": "-",
+  "CrO4": "2-",
+  "CN": "-",
+  "Cr2O7": "2-",
+  "H2PO4": "-",
+  "CH3COO": "-",
+  "HCO3": "-",
+  "HC2O4": "-",
+  "HSO4": "-",
+  "HS": "-",
+  "HSO3": "-",
+  "OH": "-",
+  "ClO": "-",
+  "HPO4": "2-",
+  "NO3": "-",
+  "NO2": "-",
+  "C2O4": "2-",
+  "ClO4": "-",
+  "MnO4": "-",
+  "PO4": "3-",
+  "SO4": "2-",
+  "SO3": "2-",
+  "SCN": "-"
+        };
+
+        // Shuffle elements
+        let elements = Object.keys(ions);
+        for (let i = elements.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [elements[i], elements[j]] = [elements[j], elements[i]];
+        }
+
+        let index = 0;
+
+        const questionEl = document.getElementById("question");
+        const answerEl = document.getElementById("answer");
+        const feedbackEl = document.getElementById("feedback");
+        const submitBtn = document.getElementById("submitBtn");
+
+        function nextQuestion() {
+            if (index >= elements.length) {
+                questionEl.textContent = "Quiz complete!";
+                answerEl.style.display = "none";
+                submitBtn.style.display = "none";
+                return;
+            }
+            questionEl.textContent = elements[index];
+            answerEl.value = "";
+            answerEl.focus();
+        }
+
+        submitBtn.addEventListener("click", function() {
+            const userAnswer = answerEl.value.trim();
+            const correctAnswer = ions[elements[index]];
+
+            // Show feedback only for the last answer
+            if (userAnswer === correctAnswer) {
+                feedbackEl.textContent = "✅ Correct!";
+            } else {
+                feedbackEl.textContent = "❌ Wrong! Correct: " + correctAnswer;
+            }
+
+            index++;
+            nextQuestion();
+        });
+
+        // Start quiz
+        nextQuestion();
+    </script>
+</body>
+</html>
