@@ -50,12 +50,10 @@
                 questionEl.textContent = "Quiz complete!";
                 answerEl.style.display = "none";
                 submitBtn.style.display = "none";
-                feedbackEl.textContent = "";
                 return;
             }
             questionEl.textContent = elements[index];
             answerEl.value = "";
-            feedbackEl.textContent = ""; // Clear previous feedback
             answerEl.focus();
         }
 
@@ -63,6 +61,7 @@
             const userAnswer = answerEl.value.trim();
             const correctAnswer = ions[elements[index]];
 
+            // Show feedback only for the last answer
             if (userAnswer === correctAnswer) {
                 feedbackEl.textContent = "✅ Correct!";
             } else {
