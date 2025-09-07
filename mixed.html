@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ion Quiz</title>
+</head>
+<body>
+    <h2>Ion Quiz</h2>
+
+    <p id="question"></p>
+    <input type="text" id="answer" placeholder="Enter charge">
+    <button id="submitBtn">Submit</button>
+
+    <p id="feedback"></p>
+    <p>
+        <a href="https://fosset.kobosh.com/polyatomic">Polyatomic</a> | 
+        <a href="https://fosset.kobosh.com">Elements</a>
+    </p>
+    <script>
+        const ions = {
+            "Lithium": "+","Li": "+","Sodium": "+","Na": "+",
+            "Magnesium": "2+","Mg": "2+","Potassium": "+","K": "+",
+            "Calcium": "2+","Ca": "2+","Rubidium": "+","Rb": "+",
+            "Strontium": "2+","Sr": "2+","Cesium": "+","Cs": "+",
+            "Barium": "2+","Ba": "2+","Chromium": "2+3+","Cr": "2+3+",
+            "Manganese": "2+3+","Mn": "2+3+","Iron": "2+3+","Fe": "2+3+",
+            "Cobalt": "2+3+","Co": "2+3+","Copper": "+2+","Cu": "+2+",
+            "Zinc": "2+","Zn": "2+","Silver": "+","Ag": "+",
+            "Cadmium": "2+","Cd": "2+","Mercury": "2+22+","Hg": "2+22+",
+            "Aluminium": "3+","Al": "3+","Nitrogen": "3-","N": "3-",
+            "Oxygen": "2-","O": "2-","Fluorine": "-","F": "-",
+            "Sulfur": "2-","S": "2-","Chlorine": "-","Cl": "-",
+            "Bromine": "-","Br": "-","Iodine": "-","I": "-",
+            "Tin": "2+4+","Sn": "2+4+","Lead": "2+4+","Pb": "2+4+",  "H3O": "+",
+  "CO3": "2-",
+  "ClO3": "-",
+  "ClO2": "-",
+  "CrO4": "2-",
+  "CN": "-",
+  "Cr2O7": "2-",
+  "H2PO4": "-",
+  "CH3COO": "-",
+  "HCO3": "-",
+  "HC2O4": "-",
+  "HSO4": "-",
+  "HS": "-",
+  "HSO3": "-",
+  "OH": "-",
+  "ClO": "-",
+  "HPO4": "2-",
+  "NO3": "-",
+  "NO2": "-",
+  "C2O4": "2-",
+  "ClO4": "-",
+  "MnO4": "-",
+  "PO4": "3-",
+  "SO4": "2-",
+  "SO3": "2-",
+  "SCN": "-"
+          
+        };
+
+        // Shuffle elements
+        let elements = Object.keys(ions);
+        for (let i = elements.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [elements[i], elements[j]] = [elements[j], elements[i]];
+        }
+
+        let index = 0;
+
+        const questionEl = document.getElementById("question");
+        const answerEl = document.getElementById("answer");
+        const feedbackEl = document.getElementById("feedback");
+        const submitBtn = document.getElementById("submitBtn");
+
+        function nextQuestion() {
+            if (index >= elements.length) {
+                questionEl.textContent = "Quiz complete!";
+                answerEl.style.display = "none";
+                submitBtn.style.display = "none";
+                return;
+            }
+            questionEl.textContent = elements[index];
+            answerEl.value = "";
+            answerEl.focus();
+        }
+
+        submitBtn.addEventListener("click", function() {
+            const userAnswer = answerEl.value.trim();
+            const correctAnswer = ions[elements[index]];
+
+            // Show feedback only for the last answer
+            if (userAnswer === correctAnswer) {
+                feedbackEl.textContent = "✅ Correct!";
+            } else {
+                feedbackEl.textContent = "❌ Wrong! Correct: " + correctAnswer;
+            }
+
+            index++;
+            nextQuestion();
+        });
+
+        // Start quiz
+        nextQuestion();
+    </script>
+</body>
+</html>
