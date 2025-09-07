@@ -6,13 +6,17 @@
 </head>
 <body>
     <h2>Ion Quiz</h2>
-    <p id="question"></p>
-    <input type="text" id="answer" placeholder="Enter charge">
-    <button id="submitBtn">Submit</button>
-    <p id="feedback"></p>
+
+    <div id="quiz">
+        <p id="question"></p>
+        <input type="text" id="answer" placeholder="Enter charge">
+        <button id="submitBtn">Submit</button>
+    </div>
+
+    <h3>Feedback:</h3>
+    <div id="feedback"></div>
 
     <script>
-        // JavaScript version of your ions dictionary
         const ions = {
             "Lithium": "+","Li": "+","Sodium": "+","Na": "+",
             "Magnesium": "2+","Mg": "2+","Potassium": "+","K": "+",
@@ -49,25 +53,26 @@
                 questionEl.textContent = "Quiz complete!";
                 answerEl.style.display = "none";
                 submitBtn.style.display = "none";
-                feedbackEl.textContent = "";
                 return;
             }
-            questionEl.textContent = "What is the charge of " + elements[index] + "?";
+            questionEl.textContent = elements[index];
             answerEl.value = "";
-            feedbackEl.textContent = "";
         }
 
         submitBtn.addEventListener("click", function() {
             const userAnswer = answerEl.value.trim();
             const correctAnswer = ions[elements[index]];
+
+            const result = document.createElement("p");
             if (userAnswer === correctAnswer) {
-                index++;
-                nextQuestion();
+                result.textContent = elements[index] + " → " + userAnswer + " ✅";
             } else {
-                feedbackEl.textContent = "Correct answer: " + correctAnswer;
-                index++;
-                nextQuestion();
+                result.textContent = elements[index] + " → " + userAnswer + " ❌ (Correct: " + correctAnswer + ")";
             }
+            feedbackEl.appendChild(result);
+
+            index++;
+            nextQuestion();
         });
 
         // Start quiz
