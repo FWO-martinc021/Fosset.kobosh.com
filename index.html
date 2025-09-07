@@ -7,14 +7,11 @@
 <body>
     <h2>Ion Quiz</h2>
 
-    <div id="quiz">
-        <p id="question"></p>
-        <input type="text" id="answer" placeholder="Enter charge">
-        <button id="submitBtn">Submit</button>
-    </div>
+    <p id="question"></p>
+    <input type="text" id="answer" placeholder="Enter charge">
+    <button id="submitBtn">Submit</button>
 
-    <h3>Feedback:</h3>
-    <div id="feedback"></div>
+    <p id="feedback"></p>
 
     <script>
         const ions = {
@@ -53,23 +50,24 @@
                 questionEl.textContent = "Quiz complete!";
                 answerEl.style.display = "none";
                 submitBtn.style.display = "none";
+                feedbackEl.textContent = "";
                 return;
             }
             questionEl.textContent = elements[index];
             answerEl.value = "";
+            feedbackEl.textContent = ""; // Clear previous feedback
+            answerEl.focus();
         }
 
         submitBtn.addEventListener("click", function() {
             const userAnswer = answerEl.value.trim();
             const correctAnswer = ions[elements[index]];
 
-            const result = document.createElement("p");
             if (userAnswer === correctAnswer) {
-                result.textContent = elements[index] + " → " + userAnswer + " ✅";
+                feedbackEl.textContent = "✅ Correct!";
             } else {
-                result.textContent = elements[index] + " → " + userAnswer + " ❌ (Correct: " + correctAnswer + ")";
+                feedbackEl.textContent = "❌ Wrong! Correct: " + correctAnswer;
             }
-            feedbackEl.appendChild(result);
 
             index++;
             nextQuestion();
