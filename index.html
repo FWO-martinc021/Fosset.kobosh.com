@@ -1,70 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Discord Server</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ion Quiz</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Welcome to Fosset</h1>
-            <nav>
-                <ul>
-                    <li><a href="#info">Server Info</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#join">Join Us</a></li>
-                    <li><a href="#leaderboard">Leaderboard</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <h2>Ion Quiz</h2>
+    <p id="question"></p>
+    <input type="text" id="answer" placeholder="Enter charge">
+    <button id="submitBtn">Submit</button>
+    <p id="feedback"></p>
 
-    <section id="info" class="section">
-        <div class="container">
-            <h2>Server Information</h2>
-            <p>We hate WVSS</p>
-            <h3>Elite role</h3>
-            <p>Elite role gives you early access to all events and give you boosts for giveaways entries. Can be bought for 1,000,000 credits</p>
-        </div>
-    </section>
+    <script>
+        // JavaScript version of your ions dictionary
+        const ions = {
+            "Lithium": "+","Li": "+","Sodium": "+","Na": "+",
+            "Magnesium": "2+","Mg": "2+","Potassium": "+","K": "+",
+            "Calcium": "2+","Ca": "2+","Rubidium": "+","Rb": "+",
+            "Strontium": "2+","Sr": "2+","Cesium": "+","Cs": "+",
+            "Barium": "2+","Ba": "2+","Chromium": "2+3+","Cr": "2+3+",
+            "Manganese": "2+3+","Mn": "2+3+","Iron": "2+3+","Fe": "2+3+",
+            "Cobalt": "2+3+","Co": "2+3+","Copper": "+2+","Cu": "+2+",
+            "Zinc": "2+","Zn": "2+","Silver": "+","Ag": "+",
+            "Cadmium": "2+","Cd": "2+","Mercury": "2+22+","Hg": "2+22+",
+            "Aluminium": "3+","Al": "3+","Nitrogen": "3-","N": "3-",
+            "Oxygen": "2-","O": "2-","Fluorine": "-","F": "-",
+            "Sulfur": "2-","S": "2-","Chlorine": "-","Cl": "-",
+            "Bromine": "-","Br": "-","Iodine": "-","I": "-",
+            "Tin": "2+4+","Sn": "2+4+","Lead": "2+4+","Pb": "2+4+"
+        };
 
+        // Shuffle elements
+        let elements = Object.keys(ions);
+        for (let i = elements.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [elements[i], elements[j]] = [elements[j], elements[i]];
+        }
 
-    <section id="events" class="section">
-        <div class="container">
-            <h2>Upcoming Events</h2>
-            <ul>
-            </ul>
-        </div>
-    </section>
+        let index = 0;
 
-    <section class="section">
-        <div>
-            <h2>Leaderboard</h2>
-            <p>This leaderboard will show the top 5 credit owners. Will be updated whenever i like it.</p>
-            <li>"1163181132263731375": 25627</li>
-            <li>"791510665906356234": 15</li>
-            <li>"1217780346675007633": 12</li>
-            <li>"1212873521445740646": 7</li>
-            <li>"1159950642299818134": 2</li>
-        </div>
-    </section>
+        const questionEl = document.getElementById("question");
+        const answerEl = document.getElementById("answer");
+        const feedbackEl = document.getElementById("feedback");
+        const submitBtn = document.getElementById("submitBtn");
 
-    <section id="join" class="section">
-        <div class="container">
-            <h2>Join Us!</h2>
-            <p>Click below to join our server:</p>
-            <a href="https://discord.gg/3r4gjUKf" class="join-btn">Join Now</a>
-        </div>
-    </section>
+        function nextQuestion() {
+            if (index >= elements.length) {
+                questionEl.textContent = "Quiz complete!";
+                answerEl.style.display = "none";
+                submitBtn.style.display = "none";
+                feedbackEl.textContent = "";
+                return;
+            }
+            questionEl.textContent = "What is the charge of " + elements[index] + "?";
+            answerEl.value = "";
+            feedbackEl.textContent = "";
+        }
 
+        submitBtn.addEventListener("click", function() {
+            const userAnswer = answerEl.value.trim();
+            const correctAnswer = ions[elements[index]];
+            if (userAnswer === correctAnswer) {
+                index++;
+                nextQuestion();
+            } else {
+                feedbackEl.textContent = "Correct answer: " + correctAnswer;
+                index++;
+                nextQuestion();
+            }
+        });
 
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Fosset. All rights reserved.</p>
-        </div>
-    </footer>
+        // Start quiz
+        nextQuestion();
+    </script>
 </body>
 </html>
